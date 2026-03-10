@@ -74,6 +74,7 @@ export function CheckoutContent() {
     const shipping = totalPrice >= 1999 ? 0 : 149;
     const total = totalPrice + shipping;
     const isAdmin = user?.role === 'admin';
+    const isLoggedIn = Boolean(token);
     useEffect(() => {
         if (step === 1 && paymentMethod !== 'cod') {
             loadCashfreeInstance().catch(() => { });
@@ -338,6 +339,10 @@ export function CheckoutContent() {
 
               {isAdmin && (<p className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-[12px] text-amber-300">
                   Admin accounts are restricted from placing orders.
+                </p>)}
+
+              {!isLoggedIn && (<p className="rounded-md border border-primary/30 bg-primary/10 px-3 py-2 text-[12px] text-primary">
+                  Please <Link href="/auth/login" className="font-medium underline underline-offset-2">log in</Link> to place an order.
                 </p>)}
 
               {errorMessage && (<p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-[12px] text-destructive">
