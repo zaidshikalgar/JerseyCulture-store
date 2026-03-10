@@ -30,6 +30,7 @@ Brevo SMTP for signup OTP:
 - BREVO_FROM_NAME=JerseyCulture
 - BREVO_SMTP_HOST=smtp-relay.brevo.com
 - BREVO_SMTP_PORT=587
+- BREVO_API_KEY=your_brevo_api_key
 API Endpoints
 - GET /api/health
 Products
