@@ -16,6 +16,10 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
+app.get('/', (req, res) => {
+  res.json({ ok: true, message: 'Backend is running' });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({ ok: true, message: 'Backend is running' });
 });
