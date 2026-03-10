@@ -24,6 +24,14 @@ app.get('/api/health', (req, res) => {
   res.json({ ok: true, message: 'Backend is running' });
 });
 
+app.get('/api', (req, res) => {
+  res.json({
+    ok: true,
+    message: 'Backend API is running',
+    endpoints: ['/api/health', '/api/products', '/api/auth', '/api/orders'],
+  });
+});
+
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/orders', orderRoutes);
