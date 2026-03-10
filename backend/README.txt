@@ -23,10 +23,13 @@ Cashfree env required in backend/.env:
 - CASHFREE_APP_ID=your_app_id
 - CASHFREE_SECRET_KEY=your_secret_key
 - CASHFREE_API_VERSION=2025-01-01
-Gmail SMTP for signup OTP:
-- GMAIL_SMTP_USER=yourgmail@gmail.com
-- GMAIL_SMTP_APP_PASSWORD=16_digit_app_password
-- GMAIL_FROM_EMAIL=yourgmail@gmail.com
+Brevo SMTP for signup OTP:
+- BREVO_SMTP_USER=your_brevo_smtp_login
+- BREVO_SMTP_PASSWORD=your_brevo_smtp_key
+- BREVO_FROM_EMAIL=verified_sender@yourdomain.com
+- BREVO_FROM_NAME=JerseyCulture
+- BREVO_SMTP_HOST=smtp-relay.brevo.com
+- BREVO_SMTP_PORT=587
 API Endpoints
 - GET /api/health
 Products

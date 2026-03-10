@@ -1,17 +1,18 @@
 const nodemailer = require('nodemailer');
 
 function getMailerConfig() {
-  const user = process.env.GMAIL_SMTP_USER;
-  const pass = process.env.GMAIL_SMTP_APP_PASSWORD;
+  const user = process.env.BREVO_SMTP_USER;
+  const pass = process.env.BREVO_SMTP_PASSWORD;
 
   if (!user || !pass) {
-    throw new Error('Gmail SMTP credentials are not configured');
+    throw new Error('Brevo SMTP credentials are not configured');
   }
 
   return {
     user,
     pass,
-    from: process.env.GMAIL_FROM_EMAIL || user,
+    fromEmail: process.env.BREVO_FROM_EMAIL || user,
+    fromName: process.env.BREVO_FROM_NAME || 'JerseyCulture',
   };
 }
 
@@ -23,18 +24,20 @@ function getTransporter() {
 
   const { user, pass } = getMailerConfig();
   transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: process.env.BREVO_SMTP_HOST || 'smtp-relay.brevo.com',
+    port: Number(process.env.BREVO_SMTP_PORT) || 587,
+    secure: false,
     auth: { user, pass },
   });
   return transporter;
 }
 
 async function sendSignupOtpEmail({ toEmail, name, otp }) {
-  const { from } = getMailerConfig();
+  const { fromEmail, fromName } = getMailerConfig();
   const transport = getTransporter();
 
   await transport.sendMail({
-    from,
+    from: `${fromName} <${fromEmail}>`,
     to: toEmail,
     subject: 'Your JerseyCulture signup OTP',
     text: `Hi ${name}, your OTP is ${otp}. It expires in 10 minutes.`,
@@ -50,11 +53,11 @@ async function sendSignupOtpEmail({ toEmail, name, otp }) {
 }
 
 async function sendPasswordResetOtpEmail({ toEmail, name, otp }) {
-  const { from } = getMailerConfig();
+  const { fromEmail, fromName } = getMailerConfig();
   const transport = getTransporter();
 
   await transport.sendMail({
-    from,
+    from: `${fromName} <${fromEmail}>`,
     to: toEmail,
     subject: 'Your JerseyCulture password reset OTP',
     text: `Hi ${name}, your password reset OTP is ${otp}. It expires in 10 minutes.`,
