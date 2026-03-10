@@ -15,8 +15,8 @@ const { protect, optionalProtect, adminOnly } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.post('/', optionalProtect, createOrder);
-router.post('/cashfree/session', optionalProtect, createCashfreePaymentSession);
+router.post('/', protect, createOrder);
+router.post('/cashfree/session', protect, createCashfreePaymentSession);
 router.post('/cashfree/verify/:orderNumber', optionalProtect, verifyCashfreePayment);
 router.post('/cancel/:orderNumber', optionalProtect, cancelOrderByNumber);
 router.post('/update-items/:orderNumber', optionalProtect, updateOrderItemsByNumber);
