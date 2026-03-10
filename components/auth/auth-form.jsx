@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, ArrowRight, Shield, Truck, Headphones, X, Mail, Loader2, } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/lib/auth-context';
+import { apiRequest } from '@/lib/api';
 const inputClass = 'w-full rounded-md border border-border/50 bg-secondary px-4 py-3.5 text-sm text-foreground placeholder:text-foreground/30 focus:outline-none focus:ring-1 focus:ring-primary transition-colors';
 export function AuthForm({ mode }) {
     const router = useRouter();

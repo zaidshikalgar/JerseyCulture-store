@@ -71,11 +71,21 @@ const requestSignupOtp = async (req, res, next) => {
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
-    await sendSignupOtpEmail({
-      toEmail: normalizedEmail,
-      name: String(name).trim(),
-      otp,
-    });
+    try {
+      await sendSignupOtpEmail({
+        toEmail: normalizedEmail,
+        name: String(name).trim(),
+        otp,
+      });
+    } catch (mailError) {
+      console.error('Signup OTP email failed', {
+        email: normalizedEmail,
+        message: mailError?.message,
+      });
+      return res.status(502).json({
+        message: 'Failed to send OTP. Please try again in a few minutes.',
+      });
+    }
 
     return res.json({
       message: 'OTP sent to your email',
@@ -154,11 +164,21 @@ const requestPasswordResetOtp = async (req, res, next) => {
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
-    await sendPasswordResetOtpEmail({
-      toEmail: normalizedEmail,
-      name: user.name || 'User',
-      otp,
-    });
+    try {
+      await sendPasswordResetOtpEmail({
+        toEmail: normalizedEmail,
+        name: user.name || 'User',
+        otp,
+      });
+    } catch (mailError) {
+      console.error('Password reset OTP email failed', {
+        email: normalizedEmail,
+        message: mailError?.message,
+      });
+      return res.status(502).json({
+        message: 'Failed to send OTP. Please try again in a few minutes.',
+      });
+    }
 
     return res.json({
       message: 'Password reset OTP sent to your email',
